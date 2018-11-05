@@ -1,20 +1,18 @@
 # Training an LSTM network on the Penn Tree Bank (PTB) dataset
 
-
 ## Introduction
 
 Long Short-Term Memory (LSTM) networks were first proposed by Sepp Hochreiter and [Jürgen Schmidhuber][1] in 1997 for modeling sequence data. [Christopher Olah][2] has nicely illustrated how they work. The fifth course in the [deep learning specialization][3] on Coursera teaches recurrent neural networks (RNN), of which the LSTM is a variant, in detail, and explains many interesting applications. For a succinct summary of the mathematics of these models, see, for example, [Stanford cs231n lecture 10][4] or [Greff, et al. (2016)][5].
 
 This is a series of illustrative examples of training an LSTM network. In these examples, an LSTM network is trained on the Penn Tree Bank (PTB) dataset to replicate some previously published work. The PTB dataset is an English corpus available from Tomáš Mikolov's web [page][6], and used by many researchers in language modeling experiments. It contains 929K training words, 73K validation words, and 82K test words. It has 10K words in its vocabulary. Wojciech Zaremba, Ilya Sutskever, and Oriol Vinyals used this dataset in their ICLR 2015 [paper][7] where they showed that the correct place to implement dropout regularization in an RNN is in the connections between layers and not between time steps. To demonstrate the effectiveness of their regularization strategy, they reported word-level perplexities on the PTB dataset with three different networks: a "small" non-regularized LSTM, a "medium" regularized LSTM, and a "large" regularized LSTM. It is their "small" non-regularized LSTM model that is replicated in these examples.  
 
-[Part I](lstm_np.ipynb) of this series (i.e. this notebook) presents an object-oriented design of the non-regularized LSTM network implemented in pure [Python][8]/[Numpy][9]. Equations are coded up from scratch to carry out the computations without dependencies on extraneous frameworks or libraries. This is a minimalist implementation, partly inspired by Andrej Karpathy's [minimalist character-level language model][14]. The program is executed on a CPU. 
+[Part I](lstm_np.ipynb) of this series presents an object-oriented design of the non-regularized LSTM network implemented in pure [Python][8]/[Numpy][9]. Equations are coded up from scratch to carry out the computations without dependencies on extraneous frameworks or libraries. This is a minimalist implementation, partly inspired by Andrej Karpathy's [minimalist character-level language model][14]. The program is executed on a CPU. 
 
 [Part II](lstm_tfe.ipynb) shows how the same model can be easily implemented using [TensorFlow][10], the open-source framework originally developed by researchers and engineers from the Google Brain team within Google’s AI organization. The model is programmed in TensorFlow's "[eager execution][11]" imperative programming environment that evaluates operations immediately without building dataflow graphs. This is akin to regular Python programming following Python control flow. The program is executed in [Colaboratory][12] with GPU acceleration.
 
 [Part III](lstm_tf.ipynb) demonstrates how the model can be implemented using TensorFlow's low-level programming model in which you first define the dataflow [graph][13] and then create a TensorFlow [session][13] to run parts of the graph. In a dataflow graph, the nodes (ops) represent units of computation, and the edges (tensors) represent the data consumed or produced by a computation. Calling most functions in the TensorFlow low-level API merely adds operations and tensors to the default graph, but does not perform the actual computation. Instead, you compose these functions until you have a tensor or operation that represents the overall computation, such as performing one step of gradient descent, and then pass that object to a TensorFlow session to run the computation. This model is different from the familiar imperative model, but is a common model for parallel computing. The program is executed in [Colaboratory][12] with GPU acceleration.
 
 It is shown that all these implementations yield results which agree with each other and with those in [Zaremba et al. (2015)][7].
-
 
 ## References
 
